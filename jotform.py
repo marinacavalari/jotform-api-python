@@ -16,6 +16,7 @@ from xml.dom.minidom import parseString
 class JotformAPIClient:
     DEFAULT_BASE_URL = 'https://api.jotform.com/'
     EU_BASE_URL = 'https://eu-api.jotform.com/'
+    DEFAULT_USER_AGENT = 'JotForm Python API client'
 
     __apiVersion = 'v1'
 
@@ -23,11 +24,12 @@ class JotformAPIClient:
     __debugMode = False
     __outputType = "json"
 
-    def __init__(self, apiKey='', baseUrl=DEFAULT_BASE_URL, outputType='json', debug=False):
+    def __init__(self, apiKey='', baseUrl=DEFAULT_BASE_URL, outputType='json', debug=False, extra_headers={}):
         self.__apiKey = apiKey
         self.__baseUrl = baseUrl
         self.__outputType = outputType.lower()
         self.__debugMode = debug
+        self.__extra_headers = extra_headers
 
     def _log(self, message):
         if self.__debugMode:
@@ -57,8 +59,11 @@ class JotformAPIClient:
             self._log(params)
 
         headers = {
-            'apiKey': self.__apiKey
+            'APIKEY': self.__apiKey,
+            'User-Agent': self.DEFAULT_USER_AGENT
         }
+
+        headers.update(self.__extra_headers)
 
         if (method == 'GET'):
             if (params):
