@@ -14,7 +14,7 @@ import json
 from xml.dom.minidom import parseString
 
 class JotformAPIClient:
-    __baseUrl = 'https://btgpactual.jotform.com/'
+    __baseUrl = 'https://btgpactual.jotform.com/API/'
     __apiVersion = 'v1'
 
     __apiKey = None
